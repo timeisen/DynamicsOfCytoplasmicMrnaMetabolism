@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
-
 #AnalyticalTails.jl
+
 using DifferentialEquations
 using OrdinaryDiffEq
 using Distributions
@@ -8,6 +8,23 @@ using LossFunctions
 using NLopt
 using SpecialFunctions
 using Cubature
+
+#=
+This code is designed to simulate a distribution of mRNA poly(A)-tail lengths over time.
+It starts with an initial distribution of tail lengths in the form
+of a source term (specified by a negative binomial distribution). Once present, these mRNA
+are acted on by deadenylation, which decreases the tail length of each mRNA 
+by one nt at a time. A logistic distribution then serves to destroy mRNAs once 
+they reach short tail lengths.
+
+Overall, the companion matrix is a bidiagonal matrix. This code simulates the solution to
+these differential equations and uses an optimization routine (L-BFGS-B) along with an 
+analytical gradient computed from an adjoint system. While the code is only set up for
+a single gene, the goal is to fit 3000 genes in parallel. To do this I'm working on efficiency
+and numerical stability of the derivates.
+=#
+
+
 #=
 To Dos:
 1. Compare to built-in adjoint sensitivity analysis: 
@@ -117,7 +134,8 @@ function dF(vecPars,intMaxTail)
     #derivative of source with respect to sz
     vecBdsz = zeros(intMaxTail + 1)
     for xEval in intMaxTail:-1:0
-        f64Term1                        = st - xEval + (st + sz) * log(sz / (st + sz))
+        f64Term1                        = st - xEval + (st + sz) * 
+            log(sz / (st + sz))
         f64Term2                        = -(st + sz) * digamma(sz) + (st + sz) * 
             digamma(sz + xEval)
         f64Bdsz                         = 1 / (st + sz) * ka * pdf(
