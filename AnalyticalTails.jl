@@ -76,7 +76,6 @@ function Simulation(vecPars,ts)
 end
 
 #@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()
-
 function dF(vecPars,intMaxTail)
     #=
     Compute the derivatives of each parameter and return those to the adjoint
@@ -164,7 +163,7 @@ function Adjoint(vecPars, objX, arrA, arrResidualsdX, ts)
             return(arrResidualsdX[:, 5])
         end
     end
-#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()#@$%^&&*()
+
     #### Multiply the correct parameters by their abundances, 
     #### as some derivates depend on the system
     objFp(t) = -[vecBdst vecBdka arrAdkd*objX(t) arrAdb*objX(t
@@ -225,9 +224,12 @@ end
 function optim(vecPars, arrData, ts)
     #### Perform the optimization
     objOpt = Opt(:LD_LBFGS,7) #Optimization object, with parameters tuned below. 
-    min_objective!(objOpt, (vecPars, grad) -> loss!(vecPars, grad, arrData, ts)[1])
-    lower_bounds!(objOpt, log.([1e-10, 1e-10, 1e-10, 1e-10, 1e-10, 1e-10, 1e-10]))
-    upper_bounds!(objOpt, log.([250, 1e2, 1e1, 1e1, 100.0, 500, 500]))
+    min_objective!(objOpt, (vecPars, grad) -> 
+        loss!(vecPars, grad, arrData, ts)[1])
+    lower_bounds!(objOpt, 
+        log.([1e-10, 1e-10, 1e-10, 1e-10, 1e-10, 1e-10, 1e-10]))
+    upper_bounds!(objOpt, 
+        log.([250, 1e2, 1e1, 1e1, 100.0, 500, 500]))
     xtol_rel!(objOpt, 1e-8)
     ftol_abs!(objOpt, 1e-3) #### Function tolerance needs to be set as 
     #### the final value fluctuates
@@ -262,7 +264,8 @@ function main()
         loss!(x, [], arrData, ts)[1], vecPars)
 
     #### Analytical gradient
-    arrAnalyticalGrad = loss!(vecPars,[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], arrData, ts)[2]
+    arrAnalyticalGrad = loss!(vecPars,[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 
+        arrData, ts)[2]
     arrCompare = [arrFiniteDiffGrad arrAnalyticalGrad vecPars arrFiniteDiffGrad./
      (arrAnalyticalGrad)]
     optim(vecPars, arrData, ts) #log of pars
