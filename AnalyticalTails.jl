@@ -262,7 +262,7 @@ function io()
 	#### CSV.read can't read in the data, need another function
     
     ### This line reads in the data, need to include the path to the file. 
-    tupData = readdlm("/lab/solexa_bartel/teisen/RNAseq/Scripts/TailKineticsModels/TEST5_genes_miR-155_minus_sample_means_background_subtracted_v6_st_global.txt",
+    tupData = readdlm("/lab/solexa_bartel/teisen/RNAseq/Scripts/TailKineticsModels/TEST_DATA.txt",
         '\t',Float64,'\n';header=true)
 
     #### Only first gene, don't flatten, exclude the steady state	
