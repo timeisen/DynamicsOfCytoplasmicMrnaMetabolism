@@ -1,50 +1,26 @@
-#populate vector of tails
-
 args<-commandArgs(trailingOnly=TRUE)
-library(deSolve)
-library(numDeriv)
-# system("R CMD SHLIB /lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/KinetTlnAnalysis/Model/UnLinkV2/AnalyticalTailsPulseStUnlinked.c")
-dyn.load("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/KinetTlnAnalysis/Model/UnLinkV2/AnalyticalTailsPulseStUnlinked.so") #load the model dynamically
 options(warn = 1)
 
-# V9 allows all 4 parameters but incorporates expression into the measurements in order to determine a,b
-# V9b fixes bugs in the list management
-# V10b adopts this script to consider different optimal starting tail lengths.
-# V11 allows only 3 parameters (a, k, b) but performs an optimization on a range of starting tail lengths in 10nt increments from 13 to 25. 
-# V16 is a reversion to V11 that now tries to fit steady state tail length and increases the range that decapping can occur at to 90nt. 
-# V20 uses matrices to solve the differential equations.
-# V24 uses gradient optimization using the L-BFGS-B method, bounded constraints, and numDeriv gradient calculations. In addition, it implements a new system for measuring starting tail length using a single matrix and a starting tail length distribution determined by a gaussian with a sd of 1 and mean=stl. 
-# the array script changes first lines of this file to make it compatible with a job array.
-# V75 is unlinked
-# 2018 09 18: This version removes the last 8 nt from the fitting and analysis.
-# initial param
-# 8nt trim from smallest tail lengths
-# way up on transcription rate?
-# pexp
-# V48 fits only one b scaling term
-# V49 change the starting distribution to negative binomial
-# 57 has box constraints
-# V58 with smoothing
-# V71 uses a plogis function in the ode model. This is the current version of the script as of 20180221
-# 2018 09 24 This version of the model uses global rate constants from the datasets that has 8 nt removed. It uses global parameters from a fitting that includes TAIL-seq data for steady state.
-# The HYBRID code uses the last 8 nt from the TAIL-seq dataset to fit 850 genes.  
-# 2019 03 01 The V3 is exactly the same as the V2 code, but run with new global parameters, varainces, and using the scaled values from the new data. 
-# The V4 script files are updated for increasing the last 8 nt weighting 6 fold to account for the fact that we don't have those values in the steady state.
-# The V5 script created on 2019 07 12, makes two changes from v4. It changes the last 8 nt to the last 20 nt to be removed. 
-# It uses the new dataset sizes. It also matches the means of the last 20 nt, not the individual values. 
+## packages and imports
+library(deSolve)
+library(numDeriv)
 
+## Main model is written in c and loaded dynamically.
+## It can be compiled with the next command. 
+#system("R CMD SHLIB AnalyticalTailsPulseStUnlinked.c")
+dyn.load("AnalyticalTailsPulseStUnlinked.so") 
 
 all_data <- read.table(args[1],head=TRUE)
 accession <<- as.character(all_data[args[2],1])
 data <- as.numeric(all_data[args[2],-1])
-offset = 35 #How many minutes to offset the data to account for export?
+offset = 35 #Minutes to offset the data to account for export?
 time_points <- (c(40,60,120,240,480,6000)-offset)
 initial_param <- c(140,1E-7,1,1)
 dir <- args[3]
 
-print(accession)
 ##Average the last 20 nt for fitting##
-data[(length(data) - 19):length(data)] = mean(data[(length(data) - 19):length(data)])
+data[(length(data) - 19):length(data)] = 
+  mean(data[(length(data) - 19):length(data)])
 ##
 
 #The variances of the datasets, to be used for residual weighting. 
@@ -57,9 +33,9 @@ vars <<- c(      #miR-155 minus
   9.202623e-15,
   4.320013e-14,
   2.808383e-13,
-  2.808383e-13/6) #The variance of the last value is reduced 6 fold
+  2.808383e-13/6) 
 ## This increases the weighting value of these points 6 fold
-#Updated variances as of 2019 06 03.
+## Updated variances as of 2019 06 03.
 
 
 Simulation <- function(pars,time){ ##This is the main simulator
@@ -69,9 +45,9 @@ Simulation <- function(pars,time){ ##This is the main simulator
   a        = pars[2]
   k        = pars[3]
   b        = pars[4]
-  size     = 16.25643 #17.27453 #Global fitted parameters as of 2019 07 15. 20 datasets total.
-  location = 263.95156 #264.97334
-  scale    = 11.05133 #11.08839 
+  size     = 16.25643 #Global fitted parameters as of 2019 07 15.
+  location = 263.95156 
+  scale    = 11.05133 
 
   parameters = c(st,a,k,b,size,location,scale)
   max_tail = 251
@@ -91,12 +67,16 @@ Simulation <- function(pars,time){ ##This is the main simulator
   else(return(NA))
   
   #Remove columns that shouldn't be compared to residuals. 
-  #Why is it 18? ncol(tails) = 253, max_tail = 251, 233:253 is 21 values including the last NA column
+  #Why is it 18? ncol(tails) = 253, max_tail = 251, 233:253 is 
+  #      21 values including the last NA column
   #      which puts it at 20 values including the 0.
+
   columns_to_remove = c(1,2,(max_tail - 18):ncol(tails))
+  
   #Note that these values are all replaced by the mean here for the last 20 nt.
   last20ntMean = rep(mean(tails[7,(max_tail - 18):(ncol(tails)-1)]), 20)
   sim <- tails[-1,-columns_to_remove]
+  
   #Add the last 20 nt back to the flattened array. 
   sim <- c(c(t(sim)),last20ntMean)
   return(sim)
@@ -128,19 +108,6 @@ CalculateResidual <- function(pars,data,plot=FALSE,time_points) { #Run the model
   #Dealing with errors in residual calculation.
   if(is.finite(residual)){return(residual)}
   else(return(10E20))
-}
-
-#Not run. Previously to calculate the steps for the nelder-mead algorithm.
-CalculateParscale <- function(pars,time_points){
-  scale<-pars
-  data<-Simulation(2^pars,time_points)
-  for(i in 1:length(pars)){
-    newpars<-pars
-    newpars[i]<-pars[i]+0.1
-    model<-Simulation(2^(newpars),time_points)
-    scale[i]<-sum((model-data)^2)
-    }
-  return(scale)
 }
 
 #Simple, finite differences gradient calculation.
@@ -192,8 +159,7 @@ all_optimizations <- Optimization(
 all_optimizations<- cbind( 
   rep(accession,nrow(all_optimizations)),
   all_optimizations)
-fn <- paste0("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/",
-  "optim_runs/",
+fn <- paste0("OUTPATH/",
   dir,"/",accession,".txt")
 write.table(all_optimizations,
   file=fn,
