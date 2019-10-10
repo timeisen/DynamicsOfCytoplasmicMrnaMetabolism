@@ -1,3 +1,14 @@
+################################################################
+# ExponentialDecay.R
+# Timothy J. Eisen
+# This code implements an exponential model fit to abundance data.
+# It uses two global parameters, a scaling param for the steady state, 
+# and an offset param for the 5EU incorporation time.
+# It also implements a gradient of the objective
+# Structure of the input data is tab delimited columns:
+# accession\ttime_point_0\ttime_point_1\ttime_point_2 etc.
+################################################################
+
 #Read data in 
 library(ggplot2)
 library(tictoc)
