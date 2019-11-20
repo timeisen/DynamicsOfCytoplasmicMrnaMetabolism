@@ -1,6 +1,6 @@
 #Fig S2B and E
 library(ggplot2)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 
 stds <- read.table("/lab/solexa_bartel/teisen/RNAseq/Annotation_files/TAIL_seq/list_of_standards_SWE_notation.txt")

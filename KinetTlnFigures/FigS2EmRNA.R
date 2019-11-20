@@ -3,7 +3,7 @@
 library(plyr)
 library(ggplot2)
 library(reshape2)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 plot_miR<-function(miR){
 	if(miR=="miR1"){

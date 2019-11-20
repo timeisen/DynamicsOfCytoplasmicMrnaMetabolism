@@ -1,7 +1,7 @@
 #Produces a plot of mean tail lengths over time.
 library(ggplot2)
 library(reshape2)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 m <- read.table("processed_files/miR-155_minus_sample_mean_tails_50tags_background_subtracted_v7.txt")
 colnames(m) <- c("accession","tp40m","tp1h","tp2h","tp4h","tp8h","tpSS")

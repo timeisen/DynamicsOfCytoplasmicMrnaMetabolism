@@ -5,7 +5,7 @@ library(reshape2)
 library(scales)
 library(cowplot)
 args<-commandArgs(trailingOnly=TRUE)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 # theme_tim <- function(base_size = 6, base_family = "Helvetica")
 # {
 # theme_bw(base_size = base_size, base_family = base_family) +

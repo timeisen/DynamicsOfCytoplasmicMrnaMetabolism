@@ -2,7 +2,7 @@
 library(plyr)
 library(reshape2)
 library(tidyverse)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 #Histograms of miRNAs.
 ##Uridylation
 

@@ -4,7 +4,7 @@ library(ggplot2)
 library(plyr)
 library(reshape2)
 options("scipen"=5)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 actD_samples<-read.table("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/processed_files/halflives/miR-1_actD_halflives_logspace_fits_indiv_baseline.txt",head=TRUE)
 # hl_5EU<-read.table("/lab/solexa_bartel/eichhorn/5EU_RPF/miR-1_miR-155_analysis/Halflife_analysis/Halflife_measurements/miR-155_RNA_minusdox_halflife_SS.txt",head=TRUE,sep="\t")

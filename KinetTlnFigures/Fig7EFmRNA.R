@@ -4,7 +4,7 @@ library(plyr)
 library(ggplot2)
 library(reshape2)
 library(cowplot)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 log_ticks<-function(start,end){
   tic_num<-log10(end)-log10(start)+1

@@ -7,7 +7,7 @@ library(plyr)
 binwidth = 1
 bin_vector<-function(v,n){unname(tapply(v, (seq_along(v)-1) %/% n, sum))} #note that the 51st bin is the 251st tail length, it is excluded
 
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 
 

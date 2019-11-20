@@ -4,7 +4,7 @@ library(ggplot2)
 library(data.table)
 library(scales)
 options("scipen"=-3)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 
 log_ticks<-function(start,end){

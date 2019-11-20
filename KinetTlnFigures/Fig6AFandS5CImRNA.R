@@ -2,7 +2,7 @@
 # packrat::init("/lab/solexa_bartel/teisen/RNAseq/NeuroAnalysis/Analysis/notebooks/")
 setwd("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/")
 library(tidyverse)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 library(ggpubr)
 
 weightedSD = function(x){

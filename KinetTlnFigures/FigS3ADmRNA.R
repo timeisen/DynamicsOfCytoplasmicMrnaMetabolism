@@ -4,7 +4,7 @@ library(plyr)
 library(reshape2)
 options("scipen"=5)
 source("https://raw.githubusercontent.com/briatte/ggcorr/master/ggcorr.R")
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 #import 8 libraries
 # miR_1xx_r0_minu<-read.table("processed_files/halflifeComparisons/miR-1_minu_R0_halflives_logspace_global_offset_noSS.txt",head=TRUE,sep="\t")

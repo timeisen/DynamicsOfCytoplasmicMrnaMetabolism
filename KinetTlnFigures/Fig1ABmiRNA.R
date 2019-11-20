@@ -9,7 +9,7 @@ args <- commandArgs(trailingOnly = TRUE)
 mirdata<-read.table(args[1],head=TRUE,sep="\t")
 
 mirdata$Data<-factor(mirdata$Data,levels=c("RNA","RPF","PAL"))
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 fill_cols_miR1<-c("#F8766D","#6F94CD","#00BA38")
 

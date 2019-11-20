@@ -3,7 +3,7 @@ library(plyr)
 library(reshape2)
 library(cowplot)
 options("scipen"=5)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 PAL_V1_1__ <-read.table("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/other_analyses/directLig/process_Stds/STDS_PAL-seq_miR-1_minus_2hr_compiled.txt",nrow=14)
 PAL_V1_155 <-read.table("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/other_analyses/directLig/process_Stds/STDS_PAL-seq_miR-155_minus_2hr_compiled.txt",nrow=14)

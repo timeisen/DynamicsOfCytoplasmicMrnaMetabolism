@@ -2,7 +2,7 @@
 library(ggplot2)
 library(data.table)
 options("scipen"=10)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 mirdata<-fread("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/miR_analysis/fc_simulation/rateComparisonsSsFitV2/simsV2/RateDataV6.txt",head=TRUE,sep="\t")
 mirdata$Data<-factor(mirdata$Data,levels=c("RNA","PAL"))

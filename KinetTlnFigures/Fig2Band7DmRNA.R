@@ -3,7 +3,7 @@ library(data.table)
 library(plyr)
 library(ggplot2)
 library(reshape2)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 #Read in the data
 NMDcalls <- read.table("other_analyses/NMDsimulations/NMDcallsTailLengthAtDcp.txt",head=TRUE,sep="\t")

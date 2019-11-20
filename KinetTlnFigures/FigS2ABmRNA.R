@@ -4,7 +4,7 @@ library(ggplot2)
 library(reshape2)
 library(plyr)
 library(data.table)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 # theme_tim <- function(base_size = 6, base_family = "Helvetica")
 # {
 # theme_classic(base_size = base_size, base_family = base_family) +

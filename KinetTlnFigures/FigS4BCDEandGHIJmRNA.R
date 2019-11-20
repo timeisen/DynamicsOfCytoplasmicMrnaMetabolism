@@ -3,7 +3,7 @@
 library(tidyverse)
 # library(ggplot2)
 # options("scipen"=-3)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 #plotting parameters here
 alpha = 0.2
 size  = 0.5

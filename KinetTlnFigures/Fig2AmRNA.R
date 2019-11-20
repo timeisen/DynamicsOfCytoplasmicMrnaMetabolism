@@ -1,6 +1,6 @@
 #Figure 2A, also can be modified to run FigS3G.
 library(tidyverse)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 # hl<-read_tsv("/lab/solexa_bartel/teisen/RNAseq/Annotation_files/HL_schwan.txt")
 # hl<-select(hl,`Refseq mRNA ID`,`mRNA half-life average [h]`)

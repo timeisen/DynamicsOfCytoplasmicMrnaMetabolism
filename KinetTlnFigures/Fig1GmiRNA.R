@@ -7,7 +7,7 @@ options("scipen"=10)
 
 mirdata<-read.table("other_analyses/Changetal2014Data/HeLaFcData20190819_data_compiled.txt",head=TRUE,sep="\t")
 mirdata$Data<-factor(mirdata$Data,levels=c("RNA","PAL"))
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 fill_cols_miR1<-c("#F8766D","#00BA38")
 

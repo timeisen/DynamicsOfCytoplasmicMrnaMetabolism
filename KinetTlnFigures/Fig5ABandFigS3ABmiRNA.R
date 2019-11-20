@@ -1,7 +1,7 @@
 #Fig5AB and FigS3AB miRNA
 
 library(ggplot2)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 # minu <- read.table("/lab/solexa_bartel/teisen/RNAseq/kinetics_of_translation/final_analyses/RNA/miR-155/Total-RNA_17_06_17/CAGATC-s_2_1_expression_values_10rpm_cutoff.txt",head=TRUE)
 # plus <- read.table("/lab/solexa_bartel/teisen/RNAseq/kinetics_of_translation/final_analyses/RNA/miR-155/Total+RNA_17_06_17/AGCGCT-s_8_1_expression_values.txt",head=TRUE)
 

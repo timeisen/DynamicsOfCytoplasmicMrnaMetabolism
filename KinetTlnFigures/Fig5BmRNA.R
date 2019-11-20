@@ -2,7 +2,7 @@
 
 library(tidyverse)
 library(data.table)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 # bins<-function(df,nt_bins){
 # 	df<-df[order(df[,1]),]

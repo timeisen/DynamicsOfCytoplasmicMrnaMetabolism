@@ -3,7 +3,7 @@
 library(plyr)
 library(tidyverse)
 library(spatstat)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 cols<-rev(c(
 "#8856a7",
 "#2b8cbe",

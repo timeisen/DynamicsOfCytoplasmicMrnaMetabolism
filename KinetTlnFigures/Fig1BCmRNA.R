@@ -5,7 +5,7 @@ library(reshape2)
 library(spatstat)
 # This script is an updated version of the original 2C V4 but with a background correction term. 
 # 2806 genes
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 options("warn"=1)
 print("Read files in ...")
 

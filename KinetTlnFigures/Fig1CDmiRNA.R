@@ -4,7 +4,7 @@ library(plyr)
 library(reshape2)
 library(tidyverse)
 library(spatstat)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 
 #Histograms of miRNAs.
 # args <- commandArgs(trailingOnly=TRUE)

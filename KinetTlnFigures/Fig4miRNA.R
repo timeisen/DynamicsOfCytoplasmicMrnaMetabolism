@@ -2,7 +2,7 @@
 library(ggplot2)
 library(data.table)
 options("scipen"=10)
-source("/lab/solexa_bartel/teisen/RNAseq/Scripts/general/ggplot_theme.R")
+source("ggplot_theme.R")
 library(extrafont)
 
 mirdata<-fread("/lab/solexa_bartel/teisen/Tail-seq/miR-155_final_analyses/miR_analysis/fc_simulation/rateComparisonsSsFitV3_1/sims/RateDataV7.txt",head=TRUE,sep="\t")
