@@ -68,15 +68,15 @@ grAnalytic <- function(params,time,data,gene_no){
 
 optimize<-function(time,data,guess){
 	gene_no = nrow(data)
-	test_param <- c(log(rep(c(guess,1),each = gene_no)),32,log(1))
+	test_param <- c(log(rep(c(guess,1),each = gene_no)),32,log(4))
 	for(i in 1:2){
 	solve<-optim(
 		par=test_param,
 		fn=objective,
 		gr=grAnalytic,
 		method="L-BFGS-B",
-		lower = c(log(rep(c(1E-10,1E-5),each = gene_no)),1,log(1E-1)),
-		upper = c(log(rep(c(1E2,1E2),each = gene_no)),39,log(1E1)),
+		lower = c(log(rep(c(1E-10,1E-5),each = gene_no)),1,log(1E-4)),
+		upper = c(log(rep(c(1E2,1E2),each = gene_no)),39,log(1E4)),
 		data=data[-c(1)],
 		time=time,
 		gene_no = gene_no)
