@@ -35,7 +35,12 @@ for.
 """
 # palBedFile = open("/lab/solexa_bartel/eichhorn/5EU_RPF/miR-1_miR-155_timecourse_tail_analysis/unfiltered_analysis/star/CGGTTA-1_1.bed",'r')
 # palBedFile = open("/lab/solexa_bartel/teisen/Tail-seq/PalSeqDirectLig/Analysis/processed_files/SplintSsAllBedUpdated20190314.txt",'r')
-palBedFile = open(sys.argv[1],'r')
+palBedFile = open(sys.argv[1],'r') 
+"""
+Note that the intersectbed run file must use the following arguments: -wb and -wa.
+bed file format, from the BAM intersected with a gene annotation file. 
+"""
+
 outFile = open(sys.argv[2],'w+')
 if sys.argv[3] == 'True' or sys.argv[3] == 'TRUE': flag = True
 else: flag = False
