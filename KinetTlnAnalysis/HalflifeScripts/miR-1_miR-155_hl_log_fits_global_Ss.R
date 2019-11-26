@@ -76,7 +76,7 @@ optimize<-function(time,data,guess){
 		gr=grAnalytic,
 		method="L-BFGS-B",
 		lower = c(log(rep(c(1E-10,1E-5),each = gene_no)),1,log(1E-4)),
-		upper = c(log(rep(c(1E2,1E2),each = gene_no)),39,log(1E4)),
+		upper = c(log(rep(c(1E5,1E2),each = gene_no)),39,log(1E4)),
 		data=data[-c(1)],
 		time=time,
 		gene_no = gene_no)
